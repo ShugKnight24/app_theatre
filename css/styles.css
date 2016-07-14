@@ -1,0 +1,32 @@
+* {
+    font-family: source-sans-pro, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+#stage {
+  border: 1px solid black;
+}
+
+#seating-container {
+  border: 1px solid black;
+}
+
+.row {
+  display: block;
+}
+.seat {
+  display: inline-block;
+  width: 15.5%;
+  text-align: center;
+  border: 1px solid #404040;
+}
+
+.reserved {
+  background-color: #e74c3c;
+}
