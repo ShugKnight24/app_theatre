@@ -24,9 +24,6 @@ $($seat).on("click", function() {
 });
 
 
-//
-//
-//     $reservedSeat.hover();
 
 
 
