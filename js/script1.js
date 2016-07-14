@@ -19,9 +19,6 @@ $($seat).on("click", function() {
 });
 
 
-//
-//
-//     $reservedSeat.hover();
 
 $($reservedSeat).hover(function() {
     $customerInfo.fadeIn(1500);
