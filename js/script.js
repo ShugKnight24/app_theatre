@@ -7,7 +7,6 @@ $(document).ready(function() {
     var users = [];
     var $regForm = $("#reg");
     var $reservedSeat = $(".reserved");
-    // var $customerInfo = $(______ ? ? ? ? ? ______);
 
 
     //hide form when page loads
@@ -23,12 +22,17 @@ $(document).ready(function() {
         if (!($(this).hasClass("reserved"))) {
             $($regForm).fadeIn(2500);
             $seatSelected = $(this); //Stores seat selected for use in submit event listener
-            $seatSelected.addClass("selected");
+            $seatSelected.toggleClass("selected");
+        } else if($(this).hasClass("reserved")) {
+          $($regForm).hide();
+          alert("No sitting in other people's laps! Choose another seat.");
         }
-        $('html,body').animate({ //Scrolls to top of form when seat is selected
-            scrollTop: $($regForm).offset().top
-        }, 'slow');
-    });
+        if($(this).hasClass("selected")) {
+          $('html,body').animate({ //Scrolls to top of form when seat is selected
+              scrollTop: $($regForm).offset().top
+          }, 'slow');
+        }
+    })
 
 
     /*----------USER OBJECT CONSTRUCTOR---------*/
@@ -65,11 +69,12 @@ $(document).ready(function() {
         $seatSelected.addClass("reserved");
         resetMouseover();
         $($regForm)[0].reset(); //resets form after submit
+        $($regForm).hide();
     });
 
 
     function resetMouseover() {
-        $(".reserved").on("mouseover", function() {
+        $(".reserved").on("mouseenter", function() {
             var hoveredSeat = $(this).children("p").text();
             var seatOwner;
             console.log("hoveredSeat: " + hoveredSeat);
@@ -80,6 +85,10 @@ $(document).ready(function() {
             });
             $(this).children("p").text(seatOwner.name + " " + seatOwner.seatNumber);
         });
+        $(".reserved").on("mouseleave", function() {
+          $(this).children("p").text($(this).attr("id"));
+        });
+
     }
 });
 
