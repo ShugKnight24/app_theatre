@@ -1,7 +1,7 @@
 //javascript / jQuery for our project!
 $(document).ready(function() {
 
-    var $seatSelected;
+    var seatSelected = [];
     var $submit = $("#submit");
     var $seat = $(".seat");
     var users = [];
@@ -21,8 +21,8 @@ $(document).ready(function() {
     $($seat).on("click", function(){
         if (!($(this).hasClass("reserved"))) {
             $($regForm).fadeIn(2500);
-            $seatSelected = $(this); //Stores seat selected for use in submit event listener
-            $seatSelected.toggleClass("selected");
+            seatSelected.push($(this)); //Stores seat selected for use in submit event listener
+            seatSelected[seatSelected.length-1].toggleClass("selected");
         } else if($(this).hasClass("reserved")) {
           $($regForm).hide();
           alert("No sitting in other people's laps! Choose another seat.");
@@ -52,13 +52,13 @@ $(document).ready(function() {
 
     function createUser() {
         var name = $("#name").val();
-        console.log(name);
         var email = $("#email").val();
-        var seatNumber = $seatSelected.children("p").text();
-        var user = new User(name, email, seatNumber);
-        console.log(user);
-        users.push(user);
-        console.log(users);
+        var seatNumber;
+        for (var i = 0; i < seatSelected.length; i++) {
+          seatNumber = seatSelected[i].children("p").text();
+          var user = new User(name, email, seatNumber);
+          users.push(user);
+        }
     }
 
     //Submit event listener: creates user object and adds "reserved" class to seat
@@ -66,7 +66,10 @@ $(document).ready(function() {
     $regForm.on("submit", function(event) {
         event.preventDefault();
         createUser();
-        $seatSelected.addClass("reserved");
+        for (var i = 0; i < seatSelected.length; i++) {
+          seatSelected[i].addClass("reserved");
+        }
+        seatSelected = [];
         resetClasses();         //
         $($regForm)[0].reset(); //resets form after submit
         $($regForm).hide();
