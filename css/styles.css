@@ -8,7 +8,7 @@ body {
     background-color: rgba(0, 130, 130, 0.2);
     min-width: 500px;
 }
-h1, h2, span, button {
+h1, h2, h5, span, button {
     font-family: 'Lobster', cursive;
     color: #e74c3c;
     text-align: center;
@@ -25,6 +25,9 @@ h3 {
     font-weight: 500;
     text-align: center;
     font-size: 0.95em;
+}
+h5 {
+    font-size: 1.75em;
 }
 .seat p {
     color: #ffffff;
@@ -55,20 +58,20 @@ h3 {
     border-radius: 25px;
 }
 form {
-  width:100%;
-  display: inline-block;
-  text-align: center;
-  margin: auto;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    margin: auto;
 }
 input {
-  font-size: 1em;
-  border-radius: 7px;
+    font-size: 1em;
+    border-radius: 7px;
 }
-button{
-  background-color: #e74c3c;
-  color: #ffffff;
-  font-size: 1.25em;
-  border-radius: 5px;
+button {
+    background-color: #e74c3c;
+    color: #ffffff;
+    font-size: 1.25em;
+    border-radius: 5px;
 }
 .row {
     display: block;
@@ -83,20 +86,41 @@ button{
     border-radius: 13px;
     margin-bottom: 5px;
     padding: 2%;
-  }
-
-.seat:hover{
-  background-color: #CED61D;
 }
-
-.selected {
-  background-color: yellow;
+#seat-available {
+    background-color: rgba(0, 130, 130, 0.9);
 }
-
-.reserved {
+.seat:hover {
+    background-color: #1abc9c; 
+}
+.selected, #seat-selected {
+    background-color: #f1c40f;
+}
+.reserved, #seat-taken {
     background-color: #e74c3c;
 }
 #instructions {
     width: 75%;
     margin: auto;
+}
+
+/* Key Styles */
+
+#seating-key {
+    width: 100%;
+    margin: 25px auto 0 auto;
+    text-align: center;
+}
+.key {
+    display: inline-block;
+    min-width: 50px;
+    width: 25%;
+    border: 3px solid #ffffff;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 10px;
+}
+.key p {
+    color: #ffffff;
+    font-family: 'Lobster', cursive;
 }

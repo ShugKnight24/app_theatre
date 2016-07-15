@@ -15,32 +15,32 @@ $(document).ready(function() {
 
     /*-----------RANDOMLY RESERVE SEATING ON PAGE LOAD-------------*/
     //generate an array of seats
-    var allSeats = $("#seating-container").children().children();//select rows.//select seats(direct children)
+    var allSeats = $("#seating-container").children().children(); //select rows.//select seats(direct children)
     for (var i = 0; i < 24; i++) {
-      var random = Math.floor((Math.random() * 2));
-      if (random === 0) {
-        $(allSeats[i]).addClass("reserved");
-      }
+        var random = Math.floor((Math.random() * 2));
+        if (random === 0) {
+            $(allSeats[i]).addClass("reserved");
+        }
     }
-      //assign class reserved
+    //assign class reserved
 
     /*-----------ON SEAT CLICK EVENT-------------*/
 
     //Seat clicked event listener: if seat is not reserved, fadein form && store seat selected
 
-    $($seat).on("click", function(){
+    $($seat).on("click", function() {
         if (!($(this).hasClass("reserved"))) {
             $($regForm).fadeIn(2500);
             seatSelected.push($(this)); //Stores seat selected for use in submit event listener
-            seatSelected[seatSelected.length-1].toggleClass("selected");
-        } else if($(this).hasClass("reserved")) {
-          $($regForm).hide();
-          alert("No sitting in other people's laps! Choose another seat.");
+            seatSelected[seatSelected.length - 1].toggleClass("selected");
+        } else if ($(this).hasClass("reserved")) {
+            $($regForm).hide();
+            alert("No sitting in other people's laps! Choose another seat.");
         }
-        if($(this).hasClass("selected")) {
-          $('html,body').animate({ //Scrolls to top of form when seat is selected
-              scrollTop: $($regForm).offset().top
-          }, 'slow');
+        if ($(this).hasClass("selected")) {
+            $('html,body').animate({ //Scrolls to top of form when seat is selected
+                scrollTop: $($regForm).offset().top
+            }, 'slow');
         }
     })
 
@@ -65,9 +65,9 @@ $(document).ready(function() {
         var email = $("#email").val();
         var seatNumber;
         for (var i = 0; i < seatSelected.length; i++) {
-          seatNumber = seatSelected[i].children("p").text();
-          var user = new User(name, email, seatNumber);
-          users.push(user);
+            seatNumber = seatSelected[i].children("p").text();
+            var user = new User(name, email, seatNumber);
+            users.push(user);
         }
     }
 
@@ -77,10 +77,10 @@ $(document).ready(function() {
         event.preventDefault();
         createUser();
         for (var i = 0; i < seatSelected.length; i++) {
-          seatSelected[i].addClass("reserved");
+            seatSelected[i].addClass("reserved");
         }
         seatSelected = [];
-        resetClasses();         //
+        resetClasses(); //
         $($regForm)[0].reset(); //resets form after submit
         $($regForm).hide();
     });
@@ -99,7 +99,7 @@ $(document).ready(function() {
             $(this).children("p").html(seatOwner.name + "<br>" + seatOwner.seatNumber);
         });
         $(".reserved").on("mouseleave", function() {
-          $(this).children("p").text($(this).attr("id"));
+            $(this).children("p").text($(this).attr("id"));
         });
     }
 
