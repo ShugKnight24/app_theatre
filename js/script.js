@@ -19,10 +19,11 @@ $(document).ready(function() {
 
     //Seat clicked event listener: if seat is not reserved, fadein form && store seat selected
 
-    $($seat).on("click", function() {
-        if ($($seat.not(".reserved"))) {
+    $($seat).on("click", function(){
+        if (!($(this).hasClass("reserved"))) {
             $($regForm).fadeIn(2500);
             $seatSelected = $(this); //Stores seat selected for use in submit event listener
+            $seatSelected.addClass("selected");
         }
     });
 
@@ -85,7 +86,6 @@ $(document).ready(function() {
 //display selected seats on form
 //on hover (reserved seats) display user info on reserved seats
 //on hover (available seats) change opacity of seat (css)
-//fix form scroll issue
 //add border-radius to form elements
 //add available seats counter
 //safari stacks form elements
