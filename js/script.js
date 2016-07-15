@@ -98,8 +98,6 @@ $(document).ready(function() {
 //add multiple seats
 //display selected seats on form
 //on hover (reserved seats) display user info on reserved seats
-//on hover (available seats) change opacity of seat (css)
 //add border-radius to form elements
 //add available seats counter
-//safari stacks form elements
 //add responsiveness
