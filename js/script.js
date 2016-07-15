@@ -24,6 +24,9 @@ $(document).ready(function() {
             $($regForm).fadeIn(2500);
             $seatSelected = $(this); //Stores seat selected for use in submit event listener
         }
+        $('html,body').animate({
+            scrollTop: $($regForm).offset().top
+        }, 'slow');
     });
 
 
@@ -63,19 +66,19 @@ $(document).ready(function() {
     });
 
 
-  function resetMouseover(){
-     $(".reserved").on("mouseover", function() {
-       var hoveredSeat = $(this).children("p").text();
-       var seatOwner;
-       console.log("hoveredSeat: " + hoveredSeat);
-       users.forEach(function(user){
-         if (user.seatNumber === hoveredSeat) {
-           seatOwner = user;
-         }
-       });
-       $(this).children("p").text(seatOwner.name + " " + seatOwner.seatNumber);
-    });
-  }
+    function resetMouseover() {
+        $(".reserved").on("mouseover", function() {
+            var hoveredSeat = $(this).children("p").text();
+            var seatOwner;
+            console.log("hoveredSeat: " + hoveredSeat);
+            users.forEach(function(user) {
+                if (user.seatNumber === hoveredSeat) {
+                    seatOwner = user;
+                }
+            });
+            $(this).children("p").text(seatOwner.name + " " + seatOwner.seatNumber);
+        });
+    }
 });
 
 
@@ -85,7 +88,6 @@ $(document).ready(function() {
 //display selected seats on form
 //on hover (reserved seats) display user info on reserved seats
 //on hover (available seats) change opacity of seat (css)
-//fix form scroll issue
 //add border-radius to form elements
 //add available seats counter
 //safari stacks form elements
