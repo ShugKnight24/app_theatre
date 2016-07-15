@@ -67,13 +67,14 @@ $(document).ready(function() {
         event.preventDefault();
         createUser();
         $seatSelected.addClass("reserved");
-        resetMouseover();
+        resetClasses();         //
         $($regForm)[0].reset(); //resets form after submit
         $($regForm).hide();
     });
 
+    //Displays associated user info on mouseenter event on reserved seats
 
-    function resetMouseover() {
+    function resetClasses() {
         $(".reserved").on("mouseenter", function() {
             var hoveredSeat = $(this).children("p").text();
             var seatOwner;
@@ -87,8 +88,8 @@ $(document).ready(function() {
         $(".reserved").on("mouseleave", function() {
           $(this).children("p").text($(this).attr("id"));
         });
-
     }
+
 });
 
 
