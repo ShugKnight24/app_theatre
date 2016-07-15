@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     /*-----------RANDOMLY RESERVE SEATING ON PAGE LOAD-------------*/
     //generate an array of seats
-    var allSeats = $("#seating-container").children().children();//select rows.//select seats(direct children)
+    var allSeats = $("#seating-container").children().children();
     for (var i = 0; i < 24; i++) {
       var random = Math.floor((Math.random() * 2));
       if (random === 0) {
