@@ -6,13 +6,23 @@ $(document).ready(function() {
     var $seat = $(".seat");
     var users = [];
     var $regForm = $("#reg");
-    var $reservedSeat = $(".reserved");
 
 
     //hide form when page loads
 
     $($regForm).hide();
 
+
+    /*-----------RANDOMLY RESERVE SEATING ON PAGE LOAD-------------*/
+    //generate an array of seats
+    var allSeats = $("#seating-container").children().children();//select rows.//select seats(direct children)
+    for (var i = 0; i < 24; i++) {
+      var random = Math.floor((Math.random() * 2));
+      if (random === 0) {
+        $(allSeats[i]).addClass("reserved");
+      }
+    }
+      //assign class reserved
 
     /*-----------ON SEAT CLICK EVENT-------------*/
 
@@ -96,7 +106,9 @@ $(document).ready(function() {
 });
 
 
-//add multiple seats
+
 //display selected seats on form
 //add available seats counter
 //making hover more uniform with seats vs seats+user info
+//add random colors for different users?
+//add random user info to randomly generated reserved seats
