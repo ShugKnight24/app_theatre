@@ -63,6 +63,7 @@ $(document).ready(function() {
         createUser();
         $seatSelected.addClass("reserved");
         resetMouseover();
+        $($regForm)[0].reset(); //resets form after submit
     });
 
 
@@ -92,4 +93,3 @@ $(document).ready(function() {
 //add available seats counter
 //safari stacks form elements
 //add responsiveness
-//clear inputs after submit
