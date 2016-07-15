@@ -25,6 +25,9 @@ $(document).ready(function() {
             $seatSelected = $(this); //Stores seat selected for use in submit event listener
             $seatSelected.addClass("selected");
         }
+        $('html,body').animate({ //Scrolls to top of form when seat is selected
+            scrollTop: $($regForm).offset().top
+        }, 'slow');
     });
 
 
@@ -61,22 +64,23 @@ $(document).ready(function() {
         createUser();
         $seatSelected.addClass("reserved");
         resetMouseover();
+        $($regForm)[0].reset(); //resets form after submit
     });
 
 
-  function resetMouseover(){
-     $(".reserved").on("mouseover", function() {
-       var hoveredSeat = $(this).children("p").text();
-       var seatOwner;
-       console.log("hoveredSeat: " + hoveredSeat);
-       users.forEach(function(user){
-         if (user.seatNumber === hoveredSeat) {
-           seatOwner = user;
-         }
-       });
-       $(this).children("p").text(seatOwner.name + " " + seatOwner.seatNumber);
-    });
-  }
+    function resetMouseover() {
+        $(".reserved").on("mouseover", function() {
+            var hoveredSeat = $(this).children("p").text();
+            var seatOwner;
+            console.log("hoveredSeat: " + hoveredSeat);
+            users.forEach(function(user) {
+                if (user.seatNumber === hoveredSeat) {
+                    seatOwner = user;
+                }
+            });
+            $(this).children("p").text(seatOwner.name + " " + seatOwner.seatNumber);
+        });
+    }
 });
 
 
@@ -90,4 +94,3 @@ $(document).ready(function() {
 //add available seats counter
 //safari stacks form elements
 //add responsiveness
-//clear inputs after submit

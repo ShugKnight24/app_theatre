@@ -55,7 +55,9 @@ h3 {
     border-radius: 25px;
 }
 form {
-  max-width: 500px;
+  width:100%;
+  display: inline-block;
+  text-align: center;
   margin: auto;
 }
 input {
@@ -80,6 +82,10 @@ button{
     border-radius: 13px;
     margin-bottom: 5px;
     padding: 2%;
+}
+
+.seat:hover{
+  background-color: #CED61D;
 }
 
 .selected {
