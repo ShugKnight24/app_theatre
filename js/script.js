@@ -80,10 +80,7 @@ $(document).ready(function() {
   }
 });
 
-
-
-//use seat text content to get seat number instead of id && remove id from seats
-//on click on available seat, change background color
+//on hover on available seat, change background color
 //toggle selected seats
 //add multiple seats
 //display selected seats on form
