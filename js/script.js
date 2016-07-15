@@ -77,13 +77,12 @@ $(document).ready(function() {
         $(".reserved").on("mouseenter", function() {
             var hoveredSeat = $(this).children("p").text();
             var seatOwner;
-            console.log("hoveredSeat: " + hoveredSeat);
             users.forEach(function(user) {
                 if (user.seatNumber === hoveredSeat) {
                     seatOwner = user;
                 }
             });
-            $(this).children("p").text(seatOwner.name + " " + seatOwner.seatNumber);
+            $(this).children("p").html(seatOwner.name + "<br>" + seatOwner.seatNumber);
         });
         $(".reserved").on("mouseleave", function() {
           $(this).children("p").text($(this).attr("id"));
@@ -93,11 +92,7 @@ $(document).ready(function() {
 });
 
 
-//on hover on available seat, change background color
-//toggle selected seats
 //add multiple seats
 //display selected seats on form
-//on hover (reserved seats) display user info on reserved seats
-//add border-radius to form elements
 //add available seats counter
-//add responsiveness
+//making hover more uniform with seats vs seats+user info
