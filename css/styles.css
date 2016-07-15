@@ -81,6 +81,11 @@ button{
     margin-bottom: 5px;
     padding: 2%;
 }
+
+.selected {
+  background-color: yellow;
+}
+
 .reserved {
     background-color: #e74c3c;
 }
