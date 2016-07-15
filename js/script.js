@@ -59,21 +59,31 @@ $(document).ready(function() {
     event.preventDefault();
     createUser();
     $seatSelected.addClass("reserved");
+    resetMouseover();
   });
 
 
   /*----------ON SEAT HOVER EVENT---------*/
 
-
-  // $($reservedSeat).hover(function() {
-  //     $customerInfo.fadeIn(1500);
-
+  function resetMouseover(){
+     $(".reserved").on("mouseover", function() {
+       var hoveredSeat = $(this).children("p").text();
+       var seatOwner;
+       console.log("hoveredSeat: " + hoveredSeat);
+       users.forEach(function(user){
+         if (user.seatNumber === hoveredSeat) {
+           seatOwner = user;
+         }
+       });
+       $(this).children("p").text(seatOwner.name);
+    });
+  }
 });
 
 
-//change text content of seats from "seat" to seat number
-//use seat text content to get seat number instead of id && remove id from seats
-//
+* //change text content of seats from "seat" to seat number
+* //use seat text content to get seat number instead of id && remove id from seats
+//on click on available seat, change background color
 //toggle selected seats
 //add multiple seats
 //display selected seats on form
@@ -81,3 +91,7 @@ $(document).ready(function() {
 //on hover (available seats) change opacity of seat (css)
 //fix form scroll issue
 //add border-radius to form elements
+//add available seats counter
+//safari stacks form elements
+//add responsiveness
+//clear inputs after submit
