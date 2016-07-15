@@ -19,10 +19,11 @@ $(document).ready(function() {
 
     //Seat clicked event listener: if seat is not reserved, fadein form && store seat selected
 
-    $($seat).on("click", function() {
-        if ($($seat.not(".reserved"))) {
+    $($seat).on("click", function(){
+        if (!($(this).hasClass("reserved"))) {
             $($regForm).fadeIn(2500);
             $seatSelected = $(this); //Stores seat selected for use in submit event listener
+            $seatSelected.addClass("selected");
         }
         $('html,body').animate({ //Scrolls to top of form when seat is selected
             scrollTop: $($regForm).offset().top
