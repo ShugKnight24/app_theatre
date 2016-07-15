@@ -24,7 +24,7 @@ $(document).ready(function() {
             $($regForm).fadeIn(2500);
             $seatSelected = $(this); //Stores seat selected for use in submit event listener
         }
-        $('html,body').animate({
+        $('html,body').animate({ //Scrolls to top of form when seat is selected
             scrollTop: $($regForm).offset().top
         }, 'slow');
     });
