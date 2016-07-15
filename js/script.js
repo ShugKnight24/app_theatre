@@ -81,8 +81,8 @@ $(document).ready(function() {
 });
 
 
-* //change text content of seats from "seat" to seat number
-* //use seat text content to get seat number instead of id && remove id from seats
+
+//use seat text content to get seat number instead of id && remove id from seats
 //on click on available seat, change background color
 //toggle selected seats
 //add multiple seats
