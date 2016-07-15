@@ -1,5 +1,5 @@
 //javascript / jQuery for our project!
-$(document).ready(function() {});
+$(document).ready(function() {
 
   var $seatSelected;
   var $submit = $("#submit");
@@ -46,9 +46,11 @@ $(document).ready(function() {});
   var name = $("#name").val();
   console.log(name);
   var email = $("#email").val();
-  var seatNumber = $seatSelected.attr("id");
+  var seatNumber = $seatSelected.children("p").text();
   var user = new User(name, email, seatNumber);
+  console.log(user);
   users.push(user);
+  console.log(users);
   }
 
   //Submit event listener: creates user object and adds "reserved" class to seat
@@ -67,3 +69,15 @@ $(document).ready(function() {});
   //     $customerInfo.fadeIn(1500);
 
 });
+
+
+//change text content of seats from "seat" to seat number
+//use seat text content to get seat number instead of id && remove id from seats
+//
+//toggle selected seats
+//add multiple seats
+//display selected seats on form
+//on hover (reserved seats) display user info on reserved seats
+//on hover (available seats) change opacity of seat (css)
+//fix form scroll issue
+//add border-radius to form elements
