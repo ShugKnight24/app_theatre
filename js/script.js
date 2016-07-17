@@ -120,7 +120,6 @@ $(function() {
       manageSeatsSelected.call(this, $currentSeat);
       scrollToForm();
     } else {
-      $registrationForm.hide();
       warnUser();
     }
   });

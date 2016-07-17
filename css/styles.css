@@ -89,6 +89,7 @@ button {
     border-radius: 13px;
     margin-bottom: 5px;
     padding: 2%;
+    cursor: pointer;
 }
 #seat-available {
     background-color: rgba(0, 130, 130, 0.9);
