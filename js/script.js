@@ -9,18 +9,34 @@ $(function() {
   var $submit = $("#submit");
 
 
-  //On page load, hide form
+  //On page load
   hideForm();
+  assignRandomUsers();
+  updateSeatOwner();
 
 
   /*-----------RANDOMLY RESERVE SEATING ON PAGE LOAD-------------*/
 
+  function generateRandomInt(n) {
+    return Math.floor(Math.random() * (n + 1));
+  }
 
+  function addUser(name, email, seatNumber) {
+    var user = new User(name, email, seatNumber);
+    users.push(user);
+  }
 
+  function updateSeatOwner() {
+    users.forEach(function(user) {
+      $("#" + user.seatNumber).children(".owner-name").text(user.name);
+    });
+  }
+  
   function assignRandomUsers() {
+    var isRandomlyAssigned, randomName, randomEmail, randomSeatNumber;
     $seat.each(function() {
-      var random = Math.floor(Math.random() * 2);
-      if (random === 0) {
+      var isRandomlyAssigned = generateRandomInt(1);
+      if (isRandomlyAssigned) {
         $(this).addClass("reserved");
         var randomName = randomUserNames[Math.floor(Math.floor(Math.random() * 15))];
         var randomEmail = randomName.toLowerCase() + "@example.com";
@@ -31,8 +47,7 @@ $(function() {
     });
   }
 
-  assignRandomUsers();
-  resetClasses();
+
 
   /*-----------ON SEAT CLICK EVENT-------------*/
 
@@ -128,39 +143,29 @@ $(function() {
           seatsSelected[i].addClass("reserved").removeClass("selected");
       }
       seatsSelected = [];                              //line redundant if using $ selection
-      resetClasses(); //explain this
+      updateSeatOwner();
       clearForm();
       hideForm();
   });
 
   //Displays associated user info on mouseenter event on reserved seats
 
-  function resetClasses() {
-      $(".reserved").on("mouseenter", function() {
-          var hoveredSeat = this.id;
-          var seatOwner;
-          users.forEach(function(user) {                 //use $ select+each instead of arr+for
-              if (user.seatNumber === hoveredSeat) {
-                  seatOwner = user;
-              }
-          });
-          $(this).prepend("<p>" + seatOwner.name + "</p>");
-      });
+  $("#seating-container").on("mouseenter mouseleave", ".reserved", function() {
+    $(this).children(".owner-name").toggle();
+  });
 
-      $(".reserved").on("mouseleave", function() {
-          $(this).children("p:first-child").remove();
-      });
-  }
+
+
 
 });
 
 
+//*priority* fix bug: each time form is submitted seat owner name is prepended to seat on hover an additional time
 
 //display selected seats on form
 //add available seats counter
 //making hover more uniform with seats vs seats+user info
 //add random colors for different users?
-//add random user info to randomly generated reserved seats
 //when seats are selected, then reserved seat is clicked on, the form is hidden until another         //available seat is clicked on
 //add reserve confirmation
 //add name validation

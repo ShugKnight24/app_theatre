@@ -34,6 +34,9 @@ h5 {
     text-transform: uppercase;
     font-size: 0.7em;
 }
+.owner-name {
+  display: none;
+}
 #main {
     background-image: url("../images/film.png");
     width: 100%;
@@ -91,7 +94,7 @@ button {
     background-color: rgba(0, 130, 130, 0.9);
 }
 .seat:hover {
-    background-color: #1abc9c; 
+    background-color: #1abc9c;
 }
 .selected, #seat-selected {
     background-color: #f1c40f;
