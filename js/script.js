@@ -1,16 +1,16 @@
 //javascript / jQuery for our project!
-$(document).ready(function() {
+$(function() {
 
-  var seatSelected = [];
-  var $submit = $("#submit");
-  var $seat = $(".seat");
   var users = [];
+  var seatSelected = [];
   var randomUserNames = ["Charlie", "Benson", "Karen", "Katie", "Steve", "Erika", "Dave", "Ray", "Chelsea", "Ithica", "Jennifer", "Shanita", "Josh", "John", "Travis"];
+
+  var $seat = $(".seat");
   var $regForm = $("#reg");
+  var $submit = $("#submit");
 
 
-  //hide form when page loads
-
+  //On page load, hide form
   $($regForm).hide();
 
 
@@ -123,7 +123,7 @@ $(document).ready(function() {
           $(this).children("p").html(seatOwner.name + "<br>" + seatOwner.seatNumber);
       });
       $(".reserved").on("mouseleave", function() {
-          $(this).children("p").html($(this).attr("id"));
+          $(this).children("p").html(this.id);
       });
   }
 
@@ -136,4 +136,4 @@ $(document).ready(function() {
 //making hover more uniform with seats vs seats+user info
 //add random colors for different users?
 //add random user info to randomly generated reserved seats
-//when seats are selected, then reserved seat is clicked on, the form is hidden until another available seat is clicked on 
+//when seats are selected, then reserved seat is clicked on, the form is hidden until another         // available seat is clicked on
