@@ -1,4 +1,3 @@
-//javascript / jQuery for our project!
 $(function() {
 
   var users = [];
@@ -11,29 +10,25 @@ $(function() {
 
 
   //On page load, hide form
-  $regForm.hide();
+  hideForm();
 
 
   /*-----------RANDOMLY RESERVE SEATING ON PAGE LOAD-------------*/
 
-  var allSeats = $("#seating-container").children().children();
+
 
   function assignRandomUsers() {
-    var randomName;
-    var randomEmail;
-    var randomSeatNumber;
-    var randomUser;
-    for (var i = 0; i < allSeats.length; i++) {
-        var random = Math.floor(Math.random() * 2);
-        if (random === 0) {
-          randomName = randomUserNames[Math.floor(Math.random() * 15)];
-          randomEmail = randomName.toLowerCase() + "@example.com";
-          randomSeatNumber = $(allSeats[i]).children("p").text();
-          randomUser = new User(randomName, randomEmail, randomSeatNumber);
-          users.push("randomUser"); //g
-          $(allSeats[i]).addClass("reserved");
-        }
-    }
+    $seat.each(function() {
+      var random = Math.floor(Math.random() * 2);
+      if (random === 0) {
+        $(this).addClass("reserved");
+        var randomName = randomUserNames[Math.floor(Math.floor(Math.random() * 15))];
+        var randomEmail = randomName.toLowerCase() + "@example.com";
+        var randomSeatNumber = this.id;
+        var randomUser = new User(randomName, randomEmail, randomSeatNumber);
+        users.push(randomUser); //g
+      }
+    });
   }
 
   assignRandomUsers();
@@ -63,12 +58,24 @@ $(function() {
     $currentSeat.toggleClass("selected");
   }
 
+  function scrollToForm() {
+    if (seatsSelected.length === 1) {
+        $('html,body').animate({ //Scrolls down to top of form when seat is selected
+            scrollTop: $regForm.offset().top
+        }, 'slow');
+    }
+  }
+
   function hideForm() {
     $regForm.hide();
   }
 
   function warnUser() {
     alert("No sitting in other people's laps! Choose another seat.");
+  }
+
+  function clearForm() {
+    $regForm[0].reset();
   }
 
   $seat.on("click", function() {
@@ -78,17 +85,12 @@ $(function() {
     if (notReserved) {
       showForm();
       manageSeatsSelected.call(this, $currentSeat);
+      scrollToForm();
     } else {
       hideForm();
       warnUser();
     }
-
-    if ($currentSeat.hasClass("selected") && seatsSelected.length === 1) {
-        $('html,body').animate({ //Scrolls down to top of form when seat is selected
-            scrollTop: $regForm.offset().top
-        }, 'slow');
-    }
-  })
+  });
 
 
   /*----------USER OBJECT CONSTRUCTOR---------*/
@@ -110,8 +112,8 @@ $(function() {
       var name = $("#name").val();
       var email = $("#email").val();
       var seatNumber;
-      for (var i = 0; i < seatsSelected.length; i++) {
-          seatNumber = seatsSelected[i].children("p").text();
+      for (var i = 0; i < seatsSelected.length; i++) {  //use $ select+each instead of arr+for
+          seatNumber = seatsSelected[i].attr("id");
           var user = new User(name, email, seatNumber);
           users.push(user);
       }
@@ -119,33 +121,34 @@ $(function() {
 
   //Submit event listener: creates user object and adds "reserved" class to seat
 
-  $regForm.on("submit", function(event) {
-      event.preventDefault();
+  $regForm.on("submit", function(e) {
+      e.preventDefault();
       createUser();
-      for (var i = 0; i < seatsSelected.length; i++) {
-          seatsSelected[i].addClass("reserved");
+      for (var i = 0; i < seatsSelected.length; i++) { //use $ select+each instead of arr+for
+          seatsSelected[i].addClass("reserved").removeClass("selected");
       }
-      seatsSelected = [];
-      resetClasses(); //
-      $regForm[0].reset(); //resets form after submit
-      $regForm.hide();
+      seatsSelected = [];                              //line redundant if using $ selection
+      resetClasses(); //explain this
+      clearForm();
+      hideForm();
   });
 
   //Displays associated user info on mouseenter event on reserved seats
 
   function resetClasses() {
       $(".reserved").on("mouseenter", function() {
-          var hoveredSeat = $(this).children("p").text();
+          var hoveredSeat = this.id;
           var seatOwner;
-          users.forEach(function(user) {
+          users.forEach(function(user) {                 //use $ select+each instead of arr+for
               if (user.seatNumber === hoveredSeat) {
                   seatOwner = user;
               }
           });
-          $(this).children("p").html(seatOwner.name + "<br>" + seatOwner.seatNumber);
+          $(this).prepend("<p>" + seatOwner.name + "</p>");
       });
+
       $(".reserved").on("mouseleave", function() {
-          $(this).children("p").html(this.id);
+          $(this).children("p:first-child").remove();
       });
   }
 
@@ -162,3 +165,4 @@ $(function() {
 //add reserve confirmation
 //add name validation
 //fix bug: scrolls to form after every selection (should only scroll once)
+//is seatsSelected array necessary? Can a JQuery selection be used for .selected?
