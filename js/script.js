@@ -2,7 +2,7 @@
 $(function() {
 
   var users = [];
-  var seatSelected = [];
+  var seatsSelected = [];
   var randomUserNames = ["Charlie", "Benson", "Karen", "Katie", "Steve", "Erika", "Dave", "Ray", "Chelsea", "Ithica", "Jennifer", "Shanita", "Josh", "John", "Travis"];
 
   var $seat = $(".seat");
@@ -11,7 +11,7 @@ $(function() {
 
 
   //On page load, hide form
-  $($regForm).hide();
+  $regForm.hide();
 
 
   /*-----------RANDOMLY RESERVE SEATING ON PAGE LOAD-------------*/
@@ -43,29 +43,51 @@ $(function() {
 
   //Seat clicked event listener: if seat is not reserved, fadein form && store seat selected
 
-  $($seat).on("click", function() {
-      if (!($(this).hasClass("reserved"))) {
-          $($regForm).fadeIn(2500);
-          var seatNumber = $(this).children("p").text();
-          var seatIndex = seatSelected.findIndex(function(seat) {
-            return seat.children("p").text() === seatNumber;
-          });
-          var isSelected = seatIndex >= 0;
-          if (!isSelected) {
-            seatSelected.push($(this)); //Stores seat selected for use in submit event listener
-          } else if (isSelected) {
-            seatSelected.splice(seatIndex, 1);
-          }
-          $(this).toggleClass("selected");
-      } else if ($(this).hasClass("reserved")) {
-          $($regForm).hide();
-          alert("No sitting in other people's laps! Choose another seat.");
-      }
-      if ($(this).hasClass("selected")) {
-          $('html,body').animate({ //Scrolls to top of form when seat is selected
-              scrollTop: $($regForm).offset().top
-          }, 'slow');
-      }
+  function showForm() {
+    $regForm.fadeIn(2500);
+  }
+
+  function manageSeatsSelected($currentSeat) {
+    var seatNumber = this.id;
+    var seatIndex = seatsSelected.findIndex(function(seat) {
+      return seat.attr("id") === seatNumber;
+    });
+    var notSelected = seatIndex === -1;
+
+    if (notSelected) {
+      seatsSelected.push($currentSeat);
+    } else {
+      seatsSelected.splice(seatIndex, 1);
+    }
+
+    $currentSeat.toggleClass("selected");
+  }
+
+  function hideForm() {
+    $regForm.hide();
+  }
+
+  function warnUser() {
+    alert("No sitting in other people's laps! Choose another seat.");
+  }
+
+  $seat.on("click", function() {
+    var $currentSeat = $(this);
+    var notReserved = !($currentSeat.hasClass("reserved"));
+
+    if (notReserved) {
+      showForm();
+      manageSeatsSelected.call(this, $currentSeat);
+    } else {
+      hideForm();
+      warnUser();
+    }
+
+    if ($currentSeat.hasClass("selected") && seatsSelected.length === 1) {
+        $('html,body').animate({ //Scrolls down to top of form when seat is selected
+            scrollTop: $regForm.offset().top
+        }, 'slow');
+    }
   })
 
 
@@ -88,8 +110,8 @@ $(function() {
       var name = $("#name").val();
       var email = $("#email").val();
       var seatNumber;
-      for (var i = 0; i < seatSelected.length; i++) {
-          seatNumber = seatSelected[i].children("p").text();
+      for (var i = 0; i < seatsSelected.length; i++) {
+          seatNumber = seatsSelected[i].children("p").text();
           var user = new User(name, email, seatNumber);
           users.push(user);
       }
@@ -100,13 +122,13 @@ $(function() {
   $regForm.on("submit", function(event) {
       event.preventDefault();
       createUser();
-      for (var i = 0; i < seatSelected.length; i++) {
-          seatSelected[i].addClass("reserved");
+      for (var i = 0; i < seatsSelected.length; i++) {
+          seatsSelected[i].addClass("reserved");
       }
-      seatSelected = [];
+      seatsSelected = [];
       resetClasses(); //
-      $($regForm)[0].reset(); //resets form after submit
-      $($regForm).hide();
+      $regForm[0].reset(); //resets form after submit
+      $regForm.hide();
   });
 
   //Displays associated user info on mouseenter event on reserved seats
@@ -136,4 +158,7 @@ $(function() {
 //making hover more uniform with seats vs seats+user info
 //add random colors for different users?
 //add random user info to randomly generated reserved seats
-//when seats are selected, then reserved seat is clicked on, the form is hidden until another         // available seat is clicked on
+//when seats are selected, then reserved seat is clicked on, the form is hidden until another         //available seat is clicked on
+//add reserve confirmation
+//add name validation
+//fix bug: scrolls to form after every selection (should only scroll once)
