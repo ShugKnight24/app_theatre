@@ -147,6 +147,9 @@ $(function() {
   $registrationForm.hide();
   assignRandomUsers();
   updateSeatOwner();
+  // $(".row").hide().each(function(i) {
+  //   $(this).delay(250*i).fadeIn(700);
+  // });
 
 });
 
@@ -155,9 +158,7 @@ $(function() {
 
 //display selected seats on form
 //add available seats counter
-//make hover more uniform with seats vs seats+user info
-//add random colors for different users?
-//fix bug: when seats are selected, then reserved seat is clicked on, the form is hidden until another available seat is clicked on
+//keep hover from changing seat size
 //add reserve confirmation
 //add name validation
-//is seatsSelected array necessary? Can a JQuery selection be used for .selected?
+//replace arrays with jQuery selections
