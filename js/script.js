@@ -37,7 +37,7 @@ $(function() {
   /*-----------RANDOM RESERVATION TASKS-------------*/
 
   //Generates random integer between 0 and n (inclusive)
-  function generateRandomInt(n) {
+  function getRandomInt(n) {
     return Math.floor(Math.random() * (n + 1));
   }
 
@@ -46,10 +46,10 @@ $(function() {
     var isRandomlyAssigned, randomName, randomEmail, randomSeatNumber;
 
     $seat.each(function() {
-      var isRandomlyAssigned = generateRandomInt(1);
+      var isRandomlyAssigned = getRandomInt(1);
       if (isRandomlyAssigned) {
         $(this).addClass("reserved");
-        randomName = randomUserNames[generateRandomInt(14)];
+        randomName = randomUserNames[getRandomInt(14)];
         randomEmail = randomName.toLowerCase() + "@example.com";
         randomSeatNumber = this.id;
         addUser(randomName, randomEmail, randomSeatNumber);
@@ -86,8 +86,8 @@ $(function() {
   }
 
   //Notifies user that clicked seat is unavialable
-  function warnUser() {
-    alert("No sitting in other people's laps! Choose another seat.");
+  function warnUser(msg) {
+    alert(msg);
   }
 
   //Clears form inputs
@@ -95,17 +95,17 @@ $(function() {
     $registrationForm[0].reset();
   }
 
-  /*-----------SUBMIT SELECTION TASKS-------------*/
+  /*-----------RESERVATION TASKS-------------*/
 
-  //Creates new user from registration form input values
-  function createUser() {
-      var name = $("#name").val();
-      var email = $("#email").val();
-      var seatNumber;
-      for (var i = 0; i < seatsSelected.length; i++) { //g
-          seatNumber = seatsSelected[i].attr("id");
-          addUser(name, email, seatNumber);
-      }
+  function manageReservations(name, email) {
+    var seatNumber;
+
+    seatsSelected.forEach(function($seatSelected){ //g
+      seatNumber = $seatSelected.attr("id");
+      addUser(name, email, seatNumber);
+      $seatSelected.addClass("reserved").removeClass("selected");
+    });
+    seatsSelected = []; //g
   }
 
   /*-----------EVENT LISTENERS-------------*/
@@ -120,22 +120,27 @@ $(function() {
       manageSeatsSelected.call(this, $currentSeat);
       scrollToForm();
     } else {
-      warnUser();
+      warnUser("No sitting in other people's laps! Choose another seat.");
     }
   });
 
   //Handles reservation form submission
   $registrationForm.on("submit", function(e) {
       e.preventDefault();
-      createUser();
-      for (var i = 0; i < seatsSelected.length; i++) { //g
-          seatsSelected[i].addClass("reserved").removeClass("selected");
+
+      var name = $("#name").val();
+      var email = $("#email").val();
+
+      if (name === "" || email === "") {
+        warnUser("Please enter a valid name and email.");
+      } else {
+        manageReservations(name, email);
+        updateSeatOwner();
+        clearForm();
+        $registrationForm.hide();
       }
-      seatsSelected = []; //g
-      updateSeatOwner();
-      clearForm();
-      $registrationForm.hide();
   });
+
 
   //Handles hover events over seats
   $seatingContainer.on("mouseenter mouseleave", ".reserved", function() {
@@ -147,10 +152,9 @@ $(function() {
   $registrationForm.hide();
   assignRandomUsers();
   updateSeatOwner();
-  // $(".row").hide().each(function(i) {
-  //   $(this).delay(250*i).fadeIn(700);
-  // });
-
+//   $(".row").hide().each(function(i) {
+//     $(this).delay(250*i).fadeIn(700);
+//   });
 });
 
 
@@ -162,3 +166,4 @@ $(function() {
 //add reserve confirmation
 //add name validation
 //replace arrays with jQuery selections
+//creates different user for multiple seats
