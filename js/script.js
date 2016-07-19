@@ -97,6 +97,7 @@ $(function() {
 
   /*-----------RESERVATION TASKS-------------*/
 
+  //Adds user to users array, updates seat status
   function manageReservations(name, email) {
     var seatNumber;
 
@@ -140,7 +141,6 @@ $(function() {
         $registrationForm.hide();
       }
   });
-
 
   //Handles hover events over seats
   $seatingContainer.on("mouseenter mouseleave", ".reserved", function() {
